@@ -1,7 +1,7 @@
 package hu.flowacademy;
 
 public class Bat extends Hazard {
-
+  char symbol = 'B';
   @Override
   void interaction(Player player) {
     if (Math.random() > 0.5) {

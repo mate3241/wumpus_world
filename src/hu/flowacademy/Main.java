@@ -15,7 +15,7 @@ public class Main {
     while (true) {
       map.printMap();
       direction = scanner.next().charAt(0);
-      if (EdgeCaseFunctions.canGoThatWay(direction, map)) {
+      if (MovementHelper.canGoThatWay(direction, map, map.player)) {
         map.player.move(direction);
       }
     }

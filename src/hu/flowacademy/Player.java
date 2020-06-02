@@ -15,7 +15,7 @@ public class Player implements Movable {
   }
 
   public void setAlive(boolean alive) {
-    alive = alive;
+    this.alive = alive;
   }
 
   public Player(String name) {
@@ -25,22 +25,6 @@ public class Player implements Movable {
 
   }
 
-  public void move(char direction){
-    switch(direction){
-      case 'w':
-        setX(getX() - 1);
-        break;
-      case 's':
-        setX(getX() + 1);
-        break;
-      case 'a':
-        setX(getY() - 1);
-        break;
-      case 'd':
-        setX(getY() + 1);
-        break;
-    }
-  }
   public void shoot(char direction){};
   public void detect(){};
   public void die(){
@@ -82,10 +66,11 @@ public class Player implements Movable {
     this.meat = meat;
   }
 
+  @Override
   public void setX(int x) {
     this.x = x;
   }
-
+  @Override
   public void setY(int y) {
     this.y = y;
   }
@@ -94,6 +79,7 @@ public class Player implements Movable {
     System.out.println("player teleported");
   }
   public void panic() {
+
     System.out.println("player panicked");
   }
 }
