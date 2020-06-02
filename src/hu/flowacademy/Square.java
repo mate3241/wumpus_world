@@ -2,6 +2,7 @@ package hu.flowacademy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Square {
@@ -16,6 +17,10 @@ public class Square {
     this.meat = meat;
   }
 
+  public List<String> getDescriptions() {
+    return List.copyOf(descriptions);
+  }
+
   public Square(int x, int y) {
     this.x = x;
     this.y = y;
@@ -24,6 +29,7 @@ public class Square {
   }
 
   public void setHazard(Hazard hazard) {
+    Objects.requireNonNull(hazard, "hazard can't be null");
     this.hazard = hazard;
   }
   public Optional<Hazard> getHazard() {

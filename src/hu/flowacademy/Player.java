@@ -22,7 +22,7 @@ public class Player implements Movable {
     this.name = name;
     setX(0);
     setY(0);
-
+    setAlive(true);
   }
 
   public void shoot(char direction){};
