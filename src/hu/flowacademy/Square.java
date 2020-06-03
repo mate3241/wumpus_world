@@ -33,18 +33,26 @@ public class Square {
     this.hazard = hazard;
   }
   public Optional<Hazard> getHazard() {
-    return Optional.of(hazard);
+    return Optional.ofNullable(hazard);
   }
 
-  public char determineSymbol() {
-    if (isExplored && (hazard instanceof Bat)) {
-      return ((Bat) hazard).symbol;
-    } else if (isExplored && hazard instanceof Wumpus) {
-      return ((Wumpus) hazard).symbol;
-    } else if (isExplored) {
-      return '.';
-    } else {
-      return '?';
+  public char determineSymbol(boolean testMode) {
+    if (testMode){
+      if (getHazard().isPresent()){
+        return getHazard().get().getSymbol();
+
+      } else {
+        return '.';
+      }
+    }
+    else {
+      if (isExplored && getHazard().isPresent() ){
+        return getHazard().get().getSymbol();
+      } else if (isExplored) {
+        return '.';
+      } else {
+        return '?';
+      }
     }
   }
 }

@@ -3,7 +3,7 @@ package hu.flowacademy;
 public class Wumpus extends Hazard implements Movable {
   private int x;
   private int y;
-  char symbol;
+  private final static char symbol = 'W';
   @Override
   public int getX() {
     return this.x;
@@ -24,6 +24,10 @@ public class Wumpus extends Hazard implements Movable {
     this.y = newY;
   }
 
+  public Wumpus(int x, int y) {
+    this.x = x;
+    this.y = y;
+  }
 
   @Override
   void interaction(Player player) {
@@ -33,6 +37,11 @@ public class Wumpus extends Hazard implements Movable {
     } else {
       player.die();
     }
+  }
+
+  @Override
+  public char getSymbol() {
+    return symbol;
   }
 
   private void relocate() {

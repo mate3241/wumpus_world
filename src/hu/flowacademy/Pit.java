@@ -1,6 +1,7 @@
 package hu.flowacademy;
 
 public class Pit extends Hazard {
+  private final static char symbol = 'A';
   @Override
   void interaction(Player player) {
     if (Math.random() > 0.3) {
@@ -8,5 +9,10 @@ public class Pit extends Hazard {
     } else {
       System.out.println("new level");
     }
+  }
+
+  @Override
+  public char getSymbol() {
+    return symbol;
   }
 }
