@@ -1,7 +1,9 @@
-package hu.flowacademy;
+package hu.wumpusworld.main;
 
 public interface Movable {
-  default void move(char direction) {
+  int x = -1;
+  int y = -1;
+  default void move(char direction, Map map) {
     switch(direction){
       case 'w':
         setX(getX() - 1);

@@ -1,4 +1,6 @@
-package hu.flowacademy;
+package hu.wumpusworld.main;
+
+import hu.wumpusworld.utils.Difficulty;
 
 public class Meat {
   private final static char symbol = 'M';

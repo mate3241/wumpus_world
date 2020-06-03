@@ -1,4 +1,7 @@
-package hu.flowacademy;
+package hu.wumpusworld.utils;
+
+import hu.wumpusworld.main.Map;
+import hu.wumpusworld.main.Movable;
 
 public class MovementHelper {
   static char generateRandomDirection(){
@@ -14,7 +17,7 @@ public class MovementHelper {
     }
     return 'd';
   }
-  protected static boolean canGoThatWay(char key, Map map, Movable movable) {
+   public static boolean canGoThatWay(char key, Map map, Movable movable) {
     switch (key) {
       case 'w':
         if (movable.getX() > 0) {

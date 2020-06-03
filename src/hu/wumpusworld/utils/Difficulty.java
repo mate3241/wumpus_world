@@ -1,4 +1,4 @@
-package hu.flowacademy;
+package hu.wumpusworld.utils;
 
 public enum Difficulty{
   EASY(6, 2, 5, 3, 2),

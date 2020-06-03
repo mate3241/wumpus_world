@@ -1,12 +1,21 @@
-package hu.flowacademy;
+package hu.wumpusworld.enemies;
+
+import hu.wumpusworld.main.Movable;
+import hu.wumpusworld.main.Player;
 
 public class Wumpus extends Hazard implements Movable {
   private int x;
   private int y;
-  private final static char symbol = 'W';
+  private final char symbol = 'W';
+  private final String warning = "You smell something terrible";
   @Override
   public int getX() {
     return this.x;
+  }
+
+  @Override
+  public String getWarning() {
+    return this.warning;
   }
 
   @Override
@@ -30,11 +39,12 @@ public class Wumpus extends Hazard implements Movable {
   }
 
   @Override
-  void interaction(Player player) {
+  public void interaction(Player player) {
     if (player.getMeat() > 0){
       player.setMeat(player.getMeat() - 1);
       relocate();
     } else {
+      System.out.println("The Wumpus tears you apart. Nasty!");
       player.die();
     }
   }
@@ -45,5 +55,6 @@ public class Wumpus extends Hazard implements Movable {
   }
 
   private void relocate() {
+    System.out.println("relocate");
   }
 }
