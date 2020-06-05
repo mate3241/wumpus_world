@@ -1,6 +1,8 @@
 package hu.wumpusworld.main;
 
-public class Player implements Movable {
+import java.io.Serializable;
+
+public class Player implements Movable, Serializable {
 
   public String name;
   public boolean teleported;
@@ -17,21 +19,20 @@ public class Player implements Movable {
     switch(direction){
       case 'w':
         setX(getX() - 1);
-        interact(map.squares[getX()][getY()]);
         break;
       case 's':
         setX(getX() + 1);
-        interact(map.squares[getX()][getY()]);
         break;
       case 'a':
         setY(getY() - 1);
-        interact(map.squares[getX()][getY()]);
         break;
       case 'd':
         setY(getY() + 1);
-        interact(map.squares[getX()][getY()]);
         break;
     }
+    interact(map.squares[getX()][getY()]);
+
+    map.squares[getX()][getY()].isExplored = true;
   }
 
   private void interact(Square square) {
@@ -39,7 +40,12 @@ public class Player implements Movable {
       square.getHazard().get().interaction(this);
     } else if (square.getWumpus().isPresent()){
       square.getWumpus().get().interaction(this);
+    } else if (square.getMeat().isPresent()){
+      setMeat(getMeat() + 1);
+      System.out.println("You picked up a piece of meat");
+      square.setMeat(null);
     }
+
   }
 
   public boolean isAlive() {
@@ -50,7 +56,7 @@ public class Player implements Movable {
     this.alive = alive;
   }
 
-  public Player(String name, int arrow) {
+  public Player(String name, int arrow, int meat) {
     this.name = name;
     setX(0);
     setY(0);
@@ -58,6 +64,7 @@ public class Player implements Movable {
     setArrow(arrow);
     setTeleported(false);
     won = false;
+    setMeat(meat);
   }
 
   public void setTeleported(boolean teleported) {
@@ -65,6 +72,10 @@ public class Player implements Movable {
   }
 
   public void shoot(char direction, Map map){
+    if (getArrow() == 0){
+      System.out.println("You have no arrows");
+      return;
+    }
     switch(direction){
       case '8':
         if(getX() > 0 && map.squares[getX() - 1][getY()].getWumpus().isPresent()){
@@ -107,7 +118,7 @@ public class Player implements Movable {
     System.out.println("REKT");
   }
   public void win(){
-    System.out.println("You won!");
+    System.out.println("You won, " + name + "!");
     won = true;
   };
 
@@ -160,4 +171,9 @@ public class Player implements Movable {
 
     System.out.println("player panicked");
   }
+
+  /*public void placeAtRandom() {
+    MapGenerator mg = new MapGenerator()
+    int x =
+  }*/
 }

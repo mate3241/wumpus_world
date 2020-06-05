@@ -3,7 +3,9 @@ package hu.wumpusworld.enemies;
 import hu.wumpusworld.main.Movable;
 import hu.wumpusworld.main.Player;
 
-public class Wumpus extends Hazard implements Movable {
+import java.io.Serializable;
+
+public class Wumpus extends Hazard implements Movable, Serializable {
   private int x;
   private int y;
   private final char symbol = 'W';
@@ -55,6 +57,6 @@ public class Wumpus extends Hazard implements Movable {
   }
 
   private void relocate() {
-    System.out.println("relocate");
+    System.out.println("The Wumpus ate one piece of meat and ran away");
   }
 }

@@ -4,12 +4,13 @@ import hu.wumpusworld.enemies.Hazard;
 import hu.wumpusworld.enemies.Wumpus;
 import hu.wumpusworld.utils.Coordinates;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Square {
+public class Square implements Serializable {
   private Meat meat;
   private Hazard hazard;
   boolean isExplored;
@@ -22,6 +23,10 @@ public class Square {
   }
   public void setWumpus(Wumpus wumpus) {
     this.wumpus = wumpus;
+  }
+
+  public Optional<Meat> getMeat() {
+    return Optional.ofNullable(meat);
   }
 
   public Square(int x, int y) {
@@ -50,6 +55,8 @@ public class Square {
         return getWumpus().get().getSymbol();
       } else if (getHazard().isPresent()) {
         return getHazard().get().getSymbol();
+      } else if (getMeat().isPresent()){
+        return getMeat().get().getSymbol();
       } else {
         return '.';
       }

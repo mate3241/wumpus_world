@@ -8,8 +8,8 @@ public class Bat extends Hazard {
   @Override
   public void interaction(Player player) {
     if (Math.random() > 0.5) {
-      System.out.println("Teleport");
-      player.teleport();
+     // player.placeAtRandom();
+      System.out.println("random place");
     } else {
       System.out.println("panic");
       player.panic();

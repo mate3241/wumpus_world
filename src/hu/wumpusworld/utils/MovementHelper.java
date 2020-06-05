@@ -3,6 +3,8 @@ package hu.wumpusworld.utils;
 import hu.wumpusworld.main.Map;
 import hu.wumpusworld.main.Movable;
 
+import java.util.Random;
+
 public class MovementHelper {
   static char generateRandomDirection(){
     double random = Math.random();
@@ -45,7 +47,4 @@ public class MovementHelper {
     return false;
   }
 
-  void emitStuff(){
-
-  }
 }

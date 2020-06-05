@@ -3,9 +3,10 @@ package hu.wumpusworld.main;
 import hu.wumpusworld.enemies.*;
 import hu.wumpusworld.utils.Difficulty;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class MapGenerator {
+public class MapGenerator implements Serializable {
   boolean testMode;
   Difficulty difficulty;
 
@@ -27,7 +28,7 @@ public class MapGenerator {
   }
 
   public void populateMap(Map map, String name) {
-    map.player = new Player(name, difficulty.arrow);
+    map.player = new Player(name, difficulty.arrow, difficulty.meat);
     generateWumpus(map);
     generateBats(map);
     generatePits(map);
@@ -35,6 +36,7 @@ public class MapGenerator {
   }
 
   private void generateMeat(Map map) {
+    map.squares[0][0].isExplored = true;
     for (int i = 0; i < difficulty.meat; i++) {
       int randomX = generateRandomNumber();
       int randomY = generateRandomNumber();
@@ -67,7 +69,7 @@ public class MapGenerator {
     for (int i = 0; i < difficulty.bat; i++) {
       int randomX = generateRandomNumber();
       int randomY = generateRandomNumber();
-      if (randomX < 2 && randomY < 0) {
+      if (randomX < 2 && randomY < 2) {
         i--;
       } else if (map.squares[randomX][randomY].getHazard().isPresent()) {
         i--;

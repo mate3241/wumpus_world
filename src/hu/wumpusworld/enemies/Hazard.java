@@ -2,7 +2,9 @@ package hu.wumpusworld.enemies;
 
 import hu.wumpusworld.main.Player;
 
-public abstract class Hazard {
+import java.io.Serializable;
+
+public abstract class Hazard implements Serializable {
   String description;
   private final char symbol = ' ';
   private final String warning = "";
