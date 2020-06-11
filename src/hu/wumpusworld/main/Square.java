@@ -1,7 +1,7 @@
 package hu.wumpusworld.main;
 
-import hu.wumpusworld.enemies.Hazard;
-import hu.wumpusworld.enemies.Wumpus;
+import hu.wumpusworld.hazards.Hazard;
+import hu.wumpusworld.hazards.Wumpus;
 import hu.wumpusworld.utils.Coordinates;
 
 import java.io.Serializable;

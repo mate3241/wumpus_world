@@ -1,6 +1,6 @@
 package hu.wumpusworld.utils;
 
-import hu.wumpusworld.enemies.Wumpus;
+import hu.wumpusworld.hazards.Wumpus;
 import hu.wumpusworld.main.Main;
 import hu.wumpusworld.main.Map;
 import hu.wumpusworld.main.MapGenerator;

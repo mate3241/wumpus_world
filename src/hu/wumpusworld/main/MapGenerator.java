@@ -1,6 +1,6 @@
 package hu.wumpusworld.main;
 
-import hu.wumpusworld.enemies.*;
+import hu.wumpusworld.hazards.*;
 import hu.wumpusworld.utils.Difficulty;
 
 import java.io.Serializable;

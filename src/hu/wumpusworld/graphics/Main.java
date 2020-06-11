@@ -33,41 +33,29 @@ public class Main extends Application implements EventHandler<ActionEvent> {
   MapGenerator mapGenerator;
   Serializer serializer;
   Map map;
-  TextArea textArea = new TextArea();
+  TextArea textArea;
   Alert loseAlert;
   Scene scene;
   private Alert winAlert;
+  List<Character> movementKeys;
+  List<Character> shootKeys;
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    Main main = new Main();
+    textArea = new TextArea();
     Menu newGameMenu = new Menu("_New Game");
     borderPane = new BorderPane();
     gridPane = new GridPane();
     gridPane.setPadding(new Insets(10, 10, 10, 10));
     gridPane.setVgap(8);
     gridPane.setHgap(10);
-    List<Character> movementKeys = new ArrayList<>(Arrays.asList('W', 'A', 'S', 'D'));
-    List<Character> shootKeys = new ArrayList<>(Arrays.asList(
+    movementKeys = new ArrayList<>(Arrays.asList('W', 'A', 'S', 'D'));
+    shootKeys = new ArrayList<>(Arrays.asList(
             KeyCode.UP.getChar().charAt(0), KeyCode.DOWN.getChar().charAt(0), KeyCode.LEFT.getChar().charAt(0), KeyCode.RIGHT.getChar().charAt(0)));
 
-    scene = new Scene(borderPane, 850, 900);
+    scene = new Scene(borderPane, 900, 900);
 
-    scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-      if (movementKeys.contains(event.getCode().getChar().charAt(0))) {
-        try {
-          mainGameLoop(event.getCode().getChar().charAt(0));
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      } else if (shootKeys.contains(event.getCode().getChar().charAt(0))) {
-        map.player.shoot(event.getCode().getChar().charAt(0), map);
-      }
-      event.consume();
-      if (map.player.won) {
-        popUpWin(winAlert);
-        map.player.won = false;
-    }});
+
     primaryStage.setTitle("Wumpus World");
     primaryStage.setScene(scene);
     primaryStage.show();
@@ -116,11 +104,27 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     Button topButton = new Button("_New game");
     Button topButton2 = new Button("Difficulty");
 
-
+    scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+      if (movementKeys.contains(event.getCode().getChar().charAt(0))) {
+        try {
+          mainGameLoop(event.getCode().getChar().charAt(0));
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      } else if (shootKeys.contains(event.getCode().getChar().charAt(0))) {
+        map.player.shoot(event.getCode().getChar().charAt(0), map);
+      }
+      event.consume();
+      if (map.player.won) {
+        popUpWin(winAlert);
+        map.player.won = false;
+      }
+    });
     topMenu.getChildren().addAll(topButton, topButton2);
 
     VBox leftMenu = new VBox();
     leftMenu.setSpacing(20);
+    leftMenu.setPadding(new Insets(10));
     Button northButton = new Button("North");
     moveFromButton(northButton, 'w');
     Button southButton = new Button("South");
@@ -134,6 +138,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     VBox rightMenu = new VBox();
     rightMenu.setSpacing(20);
+    rightMenu.setPadding(new Insets(10));
     Button shootNorthButton = new Button("Shoot North");
     shootFromButton(shootNorthButton, '8');
     Button shootEastButton = new Button("Shoot East");
@@ -160,13 +165,12 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     loseAlert.setContentText("Want to play another round?");
   }
 
-  private void shootFromButton(Button shootNorthButton, char c) {
-    shootNorthButton.setOnAction(e -> {
+  private void shootFromButton(Button shootButton, char c) {
+    shootButton.setOnAction(e -> {
       map.player.shoot(c, map);
       if (map.player.won) {
         popUpWin(winAlert);
       } else textArea.setText("You didn't hit anything");
-
     });
   }
 
@@ -187,7 +191,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
       e.printStackTrace();
     }
     Optional<ButtonType> result = winAlert.showAndWait();
-    if (result.get() == ButtonType.OK) {
+    if (ButtonType.OK == result.get()) {
       gridPane.getChildren().clear();
     } else {
       System.exit(0);
@@ -198,6 +202,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     map = setupMap(difficulty, playerName);
     this.clearTerminalLinux();
     map.setGraphics(Main.gridPane);
+
   }
 
   private Map setupMap(Difficulty difficulty, String playerName) {
@@ -211,14 +216,12 @@ public class Main extends Application implements EventHandler<ActionEvent> {
   private void mainGameLoop(char direction) throws IOException {
     StringBuilder sb = new StringBuilder();
     sb.append("Arrows: ").append(map.player.getArrow()).append("\t").append("Meat: ").append(map.player.getMeat()).append("\n");
-    if (map.player.isAlive() && !map.player.won) {
-
-    }
     //clearTerminalLinux();
     if (MovementHelper.canGoThatWay(direction, map, map.player)) {
       map.player.move(direction, map);
       if (map.player.teleported) {
         map.player.setTeleported(false);
+        textArea.setText(("Arrows: ") + (map.player.getArrow()) + ("\t") + ("Meat: ") + (map.player.getMeat()) + ("\n"));
         begin();
         gridPane.getChildren().clear();
         map.setGraphics(Main.gridPane);
@@ -266,7 +269,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     map.printMap();
   }
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
     launch(args);
   }
 
